@@ -1,13 +1,8 @@
-import { useRef, useState } from "react";
-import Counter from "./components/Counter";
-import ClassCouner from "./components/ClassCouner";
-import PostItem from "./components/PostItem";
+import { useState } from "react";
 import PostList from "./components/PostList";
-import MyButton from "./components/UI/button/MyButton";
-import MyInput from './components/UI/input/MyInput';
+import PostForm from "./components/PostForm";
 
 import './styles/App.scss';
-
 
 function App() {
 
@@ -23,32 +18,14 @@ function App() {
     //     { id: 3, title: 'Python 3', body: 'Description' }
     // ])
 
-    const [title, setTitle] = useState('');
-    const [body, setBody] = useState('');
-
-    const addNewPost = (e) => {
-        e.preventDefault();
-
-        // ПРОДОЛЖИТЬ УРОК ПО ВИДОСУ (ЗАКОНЧИЛИ НА 53:51)
+    const createPost = (newPost) => {
+        setPosts([...posts, newPost]);
     }
+
 
     return (
         <div className="App">
-            <form >
-                <MyInput
-                    type="text"
-                    placeholder="Название поста"
-                    value={title}
-                    onChange={e => setTitle(e.target.value)}
-                />
-                <MyInput
-                    type="text"
-                    placeholder="Описание поста"
-                    value={body}
-                    onChange={e => setBody(e.target.value)}
-                />
-                <MyButton onClick={addNewPost} >Создать пост</MyButton>
-            </form>
+            <PostForm create={createPost} />
             <PostList posts={posts} title={'Посты про JS'} />
             {/* <PostList posts={posts2} title={'Посты про Python'} /> */}
         </div>
@@ -56,3 +33,5 @@ function App() {
 }
 
 export default App;
+
+// Продолжить урок (просмотр на 1:02:22) 
