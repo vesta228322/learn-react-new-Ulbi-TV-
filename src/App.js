@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
 
 import './styles/App.scss';
-import MySelect from "./components/UI/select/MySelect";
+import PostFilter from "./components/PostFilter";
 
 function App() {
 
     const [posts, setPosts] = useState([
-        { id: 1, title: 'JavaScript', body: 'Description' },
-        { id: 2, title: 'JavaScript 2', body: 'Description' },
-        { id: 3, title: 'JavaScript 3', body: 'Description' }
+        { id: 1, title: 'ааа', body: 'бб' },
+        { id: 2, title: 'гг 2', body: 'аа' },
+        { id: 3, title: 'вв 3', body: 'яя' }
     ])
 
     // const [posts2, setPosts2] = useState([
@@ -18,6 +18,19 @@ function App() {
     //     { id: 2, title: 'Python 2', body: 'Description' },
     //     { id: 3, title: 'Python 3', body: 'Description' }
     // ])
+
+    const [filter, setFilter] = useState({sort: '', query: ''})
+    const sortedPost = useMemo(() => {
+
+        if (filter.sort) {
+            [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
+        }
+        return posts;
+    }, [filter.sort, posts]);
+
+    const sortedAndSearchPost = useMemo(() => {
+        return sortedPost.filter(post => post.title.toLocaleLowerCase().includes(filter.query))
+    }, [filter.query, sortedPost])
 
     const createPost = (newPost) => {
         setPosts([...posts, newPost]);
@@ -27,25 +40,19 @@ function App() {
         setPosts(posts.filter(p => p.id !== post.id));
     }
 
-
     return (
         <div className="App">
             <PostForm create={createPost} />
-            <hr style={{margin: '15px 0'}} />
-            <div>
-                <MySelect
-                    defoultValue={'Сортировка'}
-                    options={[
-                        {value: 'title', name: 'По названию'},
-                        {value: 'body', name: 'По описанию'},
-                        ]}
-                />
-            </div>
+            <hr style={{ margin: '15px 0' }} />
+            <PostFilter 
+                filter={filter}
+                setFilter={setFilter}
+            />
             {
-                posts.length
-                    ? 
-                    <PostList remove={removePost} posts={posts} title={'Посты про JS'} />
-                    : 
+                sortedAndSearchPost.length
+                    ?
+                    <PostList remove={removePost} posts={sortedAndSearchPost} title={'Посты про JS'} />
+                    :
                     <h1
                         style={{ textAlign: 'center' }} >
                         Посты не найдены
@@ -57,5 +64,3 @@ function App() {
 }
 
 export default App;
-
-// Продолжить урок (просмотр на 1:02:22) 
