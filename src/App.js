@@ -19,7 +19,7 @@ function App() {
     //     { id: 3, title: 'Python 3', body: 'Description' }
     // ])
 
-    const [filter, setFilter] = useState({sort: '', query: ''})
+    const [filter, setFilter] = useState({ sort: '', query: '' })
     const sortedPost = useMemo(() => {
 
         if (filter.sort) {
@@ -43,8 +43,14 @@ function App() {
     return (
         <div className="App">
             <PostForm create={createPost} />
+            <MyButton style={{ marginTop: '30px' }} onClick={() => setModal(true)} >
+                Создать пользователя дыбилушку
+            </MyButton>
+            <MyModal visible={modal} setVisible={setModal} >
+                <PostForm create={createPost} />
+            </MyModal>
             <hr style={{ margin: '15px 0' }} />
-            <PostFilter 
+            <PostFilter
                 filter={filter}
                 setFilter={setFilter}
             />
