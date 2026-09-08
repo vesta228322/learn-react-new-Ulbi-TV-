@@ -21,4 +21,25 @@
     margin-top: 15px;
     justify-content: space-between;
     align-items: center;
+
+
+    &-enter {
+        opacity: 0;
+
+
+        &-active {
+            opacity: 1;
+            transition: opacity 500ms ease-in;
+        }
+    }
+
+    &-exit {
+        opacity: 1;
+
+
+        &-active {
+            opacity: 0;
+            transition: opacity 500ms ease-in;
+        }
+    }
 }
