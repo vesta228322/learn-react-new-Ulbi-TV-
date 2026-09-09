@@ -6,7 +6,7 @@ function PostItem(props) {
 
 
     return (
-        <div ref={props.ref} className="post">
+        <div className="post">
             <div className="post__content">
                 <strong>{props.number}. {props.post.title}</strong>
                 <div>
